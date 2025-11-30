@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smooth Scroll Experience</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #334155;
+            border-radius: 5px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #475569;
+        }
+
+        /* Scroll Progress Bar */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(to right, #6366f1, #ec4899);
+            width: 0%;
+            z-index: 100;
+            transition: width 0.1s ease-out;
+        }
+
+        /* Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 1s cubic-bezier(0.5, 0, 0, 1);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Staggered delays for children */
+        .reveal-delay-100 { transition-delay: 0.1s; }
+        .reveal-delay-200 { transition-delay: 0.2s; }
+        .reveal-delay-300 { transition-delay: 0.3s; }
+
+        /* Floating Animation for Hero */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        /* Gradient Text Utility */
+        .text-gradient {
+            background: linear-gradient(to right, #818cf8, #c084fc, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Scroll Progress Bar -->
+    <div id="progress-bar"></div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 transition-all duration-300 backdrop-blur-md border-b border-transparent" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center">
+                    <a href="#" class="text-2xl font-bold tracking-tighter text-white hover:text-indigo-400 transition">
+                        AS<span class="text-indigo-500">.</span>
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                        <a href="#about" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">About</a>
+                        <a href="#work" class="hover:text-indigo-400 px-3 py-2 rounded-md text-sm font-medium transition-colors">Work</a>
+                        <a href="#contact" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-full text-sm font-medium transition-transform transform hover:scale-105">Get in touch</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button id="mobile-menu-btn" class="text-gray-300 hover:text-white p-2">
+                        <i data-lucide="menu"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-slate-900 absolute w-full border-b border-slate-800" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="#about" class="hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">About</a>
+                <a href="#work" class="hover:text-indigo-400 block px-3 py-2 rounded-md text-base font-medium">Work</a>
+                <a href="#contact" class="block text-indigo-400 px-3 py-2 font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <!-- Background Elements -->
+        <div class="absolute top-20 left-10 w-72 h-72 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float"></div>
+        <div class="absolute bottom-20 right-10 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-float" style="animation-delay: 2s;"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <div class="reveal">
+                <span class="inline-block py-1 px-3 rounded-full bg-slate-800 border border-slate-700 text-indigo-400 text-sm font-semibold mb-6">
+                    Welcome to the portfolio
+                </span>
+                <h1 class="text-5xl md:text-8xl font-extrabold tracking-tight mb-8 leading-tight">
+                    Creative <br>
+                    <span class="text-gradient">Design & Code</span>
+                </h1>
+                <p class="mt-4 max-w-2xl mx-auto text-xl text-slate-400 mb-10">
+                    Crafting digital experiences with precision, motion, and aesthetics. 
+                    Scroll down to explore the journey.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="#about" class="bg-white text-slate-900 px-8 py-4 rounded-full font-bold hover:bg-slate-200 transition-colors shadow-lg shadow-indigo-500/20">
+                        Explore More
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-slate-500">
+            <i data-lucide="arrow-down" class="w-6 h-6"></i>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-slate-900/50 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl shadow-indigo-500/10 border border-slate-700 aspect-[4/3] bg-slate-800 group">
+                        <!-- Abstract Art representation -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-indigo-500/20 to-purple-500/20 group-hover:scale-105 transition-transform duration-700"></div>
+                        <div class="absolute inset-0 flex items-center justify-center">
+                             <i data-lucide="code-2" class="w-32 h-32 text-indigo-500/40"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="reveal reveal-delay-200">
+                    <h2 class="text-3xl md:text-5xl font-bold mb-6">Redefining <span class="text-indigo-500">Interaction</span></h2>
+                    <p class="text-lg text-slate-400 mb-6 leading-relaxed">
+                        We don't just build websites; we create fluid environments. By focusing on smooth transitions, intuitive layouts, and responsive design, we ensure every user feels at home.
+                    </p>
+                    <div class="grid grid-cols-2 gap-6 mt-8">
+                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                            <i data-lucide="zap" class="w-8 h-8 text-yellow-400 mb-2"></i>
+                            <h3 class="font-bold text-white">Fast</h3>
+                            <p class="text-sm text-slate-400">Optimized for speed</p>
+                        </div>
+                        <div class="p-4 rounded-xl bg-slate-800/50 border border-slate-700">
+                            <i data-lucide="smartphone" class="w-8 h-8 text-pink-400 mb-2"></i>
+                            <h3 class="font-bold text-white">Responsive</h3>
+                            <p class="text-sm text-slate-400">Looks good everywhere</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects/Features Section -->
+    <section id="work" class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-20 reveal">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">Selected <span class="text-gradient">Works</span></h2>
+                <p class="text-slate-400">A showcase of modern web technologies.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <div class="reveal reveal-delay-100 group">
+                    <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-indigo-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-indigo-500/10 h-full flex flex-col">
+                        <div class="h-48 bg-gradient-to-r from-cyan-500 to-blue-500 relative">
+                            <div class="absolute inset-0 bg-black/10"></div>
+                        </div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2">Neon Dashboard</h3>
+                            <p class="text-slate-400 mb-4 flex-1">A high-performance analytics dashboard featuring dark mode and real-time data visualization.</p>
+                            <a href="#" class="text-indigo-400 font-medium hover:text-indigo-300 inline-flex items-center">View Project <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="reveal reveal-delay-200 group">
+                    <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-pink-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-pink-500/10 h-full flex flex-col">
+                        <div class="h-48 bg-gradient-to-r from-purple-500 to-pink-500 relative"></div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2">E-Commerce UI</h3>
+                            <p class="text-slate-400 mb-4 flex-1">Fluid grid layouts with seamless cart interactions and payment gateway integration.</p>
+                            <a href="#" class="text-pink-400 font-medium hover:text-pink-300 inline-flex items-center">View Project <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="reveal reveal-delay-300 group">
+                    <div class="bg-slate-800 rounded-2xl overflow-hidden border border-slate-700 hover:border-green-500/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-green-500/10 h-full flex flex-col">
+                        <div class="h-48 bg-gradient-to-r from-emerald-500 to-teal-500 relative"></div>
+                        <div class="p-6 flex-1 flex flex-col">
+                            <h3 class="text-2xl font-bold mb-2">Eco Tracker</h3>
+                            <p class="text-slate-400 mb-4 flex-1">Mobile-first PWA helping users track carbon footprint with animated progress bars.</p>
+                            <a href="#" class="text-teal-400 font-medium hover:text-teal-300 inline-flex items-center">View Project <i data-lucide="arrow-right" class="w-4 h-4 ml-1"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-gradient-to-b from-slate-900 to-black relative">
+        <div class="max-w-3xl mx-auto px-4 text-center reveal">
+            <h2 class="text-4xl md:text-6xl font-bold mb-8">Ready to start?</h2>
+            <p class="text-xl text-slate-400 mb-10">
+                Let's build something amazing together. Reach out and let's talk about your next project.
+            </p>
+            <a href="mailto:aman@example.com" class="inline-block bg-indigo-600 hover:bg-indigo-700 text-white text-lg font-bold py-4 px-10 rounded-full transition-all transform hover:scale-105 shadow-lg shadow-indigo-600/30">
+                Say Hello
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 bg-black pt-12 pb-8">
+        <div class="max-w-7xl mx-auto px-4 flex flex-col items-center">
+            
+            <div class="flex space-x-6 mb-8 text-slate-400">
+                <a href="#" class="hover:text-white transition"><i data-lucide="github"></i></a>
+                <a href="#" class="hover:text-white transition"><i data-lucide="twitter"></i></a>
+                <a href="#" class="hover:text-white transition"><i data-lucide="linkedin"></i></a>
+                <a href="#" class="hover:text-white transition"><i data-lucide="instagram"></i></a>
+            </div>
+
+            <!-- THE REQUESTED CREDIT -->
+            <div class="text-center">
+                <p class="text-slate-500 text-sm mb-2">&copy; 2024 All Rights Reserved.</p>
+                <p class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400 font-bold text-lg tracking-wide">
+                    Made by Aman Sinha
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // 1. SCROLL PROGRESS BAR
+        window.onscroll = function() {
+            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            let scrolled = (winScroll / height) * 100;
+            document.getElementById("progress-bar").style.width = scrolled + "%";
+            
+            // Navbar Blur effect adjustment
+            const navbar = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-slate-900/80', 'border-slate-800');
+            } else {
+                navbar.classList.remove('bg-slate-900/80', 'border-slate-800');
+            }
+        };
+
+        // 2. REVEAL ANIMATION ON SCROLL
+        const revealElements = document.querySelectorAll('.reveal');
+
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        };
+
+        window.addEventListener('scroll', revealOnScroll);
+        // Trigger once on load
+        revealOnScroll();
+
+        // 3. MOBILE MENU TOGGLE
+        const btn = document.getElementById('mobile-menu-btn');
+        const menu = document.getElementById('mobile-menu');
+
+        btn.addEventListener('click', () => {
+            menu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                menu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
+
